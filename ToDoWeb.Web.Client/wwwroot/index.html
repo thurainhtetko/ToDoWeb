@@ -4,18 +4,29 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <base href="/" />
     <title>Todo</title>
+    <base href="/" />
     <link rel="icon" type="image/svg+xml" href="_content/ToDoWeb.Shared/favicon.svg" />
-    <link rel="stylesheet" href="_content/ToDoWeb.Shared/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="preload" id="webassembly" />
     <link rel="stylesheet" href="_content/ToDoWeb.Shared/app.css" />
+    <script type="importmap"></script>
 </head>
 
 <body>
     <div id="app">
-        <div class="loading-state">BRUTODO.</div>
+        <svg class="loading-progress">
+            <circle r="40%" cx="50%" cy="50%" />
+            <circle r="40%" cx="50%" cy="50%" />
+        </svg>
+        <div class="loading-progress-text"></div>
     </div>
-    <script src="_framework/blazor.webassembly.js"></script>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="." class="reload">Reload</a>
+        <span class="dismiss">dY-T</span>
+    </div>
+    <script src="_framework/blazor.webassembly#[.{fingerprint}].js"></script>
 </body>
 
 </html>
