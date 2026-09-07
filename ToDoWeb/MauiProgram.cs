@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using ToDoWeb.Services;
 using ToDoWeb.Shared.Services;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -21,8 +22,19 @@ namespace ToDoWeb
             // Add device-specific services used by the ToDoWeb.Shared project
             builder.Services.AddSingleton<IFormFactor, FormFactor>();
 
-            var supabaseUrl = builder.Configuration["Supabase:Url"] ?? Environment.GetEnvironmentVariable("SUPABASE_URL") ?? "YOUR_SUPABASE_URL";
-            var supabaseKey = builder.Configuration["Supabase:AnonKey"] ?? Environment.GetEnvironmentVariable("SUPABASE_ANON_KEY") ?? "YOUR_SUPABASE_ANON_KEY";
+            var (fileUrl, fileKey) = LoadSupabaseSettings();
+            var supabaseUrl = Environment.GetEnvironmentVariable("SUPABASE_URL") ?? fileUrl;
+            var supabaseKey = Environment.GetEnvironmentVariable("SUPABASE_ANON_KEY") ?? fileKey;
+
+            if (string.IsNullOrWhiteSpace(supabaseUrl) || !supabaseUrl.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException("Supabase URL is missing or invalid. Configure Resources/Raw/appsettings.json or set the SUPABASE_URL environment variable.");
+            }
+
+            if (string.IsNullOrWhiteSpace(supabaseKey))
+            {
+                throw new InvalidOperationException("Supabase anon key is missing. Configure Resources/Raw/appsettings.json or set the SUPABASE_ANON_KEY environment variable.");
+            }
 
             builder.Services.AddScoped(provider => new Supabase.Client(supabaseUrl, supabaseKey, new SupabaseOptions
             {
@@ -44,6 +56,14 @@ namespace ToDoWeb
 #endif
 
             return builder.Build();
+        }
+
+        private static (string? Url, string? Key) LoadSupabaseSettings()
+        {
+            using var stream = Microsoft.Maui.Storage.FileSystem.OpenAppPackageFileAsync("appsettings.json").GetAwaiter().GetResult();
+            using var doc = JsonDocument.Parse(stream);
+            var supabase = doc.RootElement.GetProperty("Supabase");
+            return (supabase.GetProperty("Url").GetString(), supabase.GetProperty("AnonKey").GetString());
         }
     }
 }

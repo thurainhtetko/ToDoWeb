@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\ToDoWeb.Shared.props" />
-</Project>

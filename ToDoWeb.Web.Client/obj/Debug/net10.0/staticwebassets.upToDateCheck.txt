@@ -1,4 +1,0 @@
-wwwroot\appsettings.Development.json
-wwwroot\appsettings.json
-E:\Codes\C#\ToDoWeb\ToDoWeb\ToDoWeb.Web.Client\wwwroot\appsettings.Development.json
-E:\Codes\C#\ToDoWeb\ToDoWeb\ToDoWeb.Web.Client\wwwroot\appsettings.json
