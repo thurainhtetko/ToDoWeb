@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ToDoWeb.Web.Client\ToDoWeb.Web.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.0" />
+    <PackageReference Include="supabase-csharp" Version="0.16.2" />
   </ItemGroup>
 
 </Project>

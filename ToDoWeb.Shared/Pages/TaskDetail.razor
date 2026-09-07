@@ -1,0 +1,114 @@
+@inherits MainLayout
+@page "/task/{Id}"
+@attribute [Authorize]
+@using System.Security.Claims
+@using ToDoWeb.Shared.Models
+@inject SupabaseAuthenticationStateProvider AuthProvider
+@inject TodoService Todos
+@inject NavigationManager Navigation
+
+<div class="detail-page">
+    <button class="back-btn" @onclick="GoList">← BACK TO LIST</button>
+
+    @if (_task is null)
+    {
+        <div class="detail-empty">@(_notFound ? "TASK NOT FOUND." : "LOADING...")</div>
+    }
+    else
+    {
+        <div class="detail-hero @(IsDone ? "done" : "")">
+            <div class="detail-meta">TASK #@_task.Id · @_task.CreatedAt?.ToString("yyyy-MM-dd")</div>
+            <h1 class="detail-title @(IsDone ? "done" : "")">@_task.Title</h1>
+        </div>
+
+        <div class="meta-row">
+            <div class="meta-cell">
+                <div class="meta-label">STATUS</div>
+                <div class="meta-badge @(IsDone ? "status-done" : "status-open")">@(IsDone ? "DONE" : "OPEN")</div>
+            </div>
+            <div class="meta-cell">
+                <div class="meta-label">PRIORITY</div>
+                <div class="meta-badge" style="background: @PriorityColor(_task.Priority);">@_task.Priority</div>
+            </div>
+        </div>
+
+        <div class="notes-box">
+            <div class="notes-label">NOTES</div>
+            <div class="notes-body">@(string.IsNullOrWhiteSpace(_task.Detail) ? "No notes recorded." : _task.Detail)</div>
+        </div>
+
+        <div class="detail-actions">
+            <button class="mark-btn @(IsDone ? "done" : "")" @onclick="ToggleAsync" disabled="@_busy">@(IsDone ? "↩ MARK OPEN" : "✓ MARK DONE")</button>
+            <button class="delete-btn" @onclick="DeleteAsync">✕ DELETE</button>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public string Id { get; set; } = "";
+
+    private TaskItem? _task;
+    private bool _notFound;
+    private bool _busy;
+
+    private bool IsDone => _task?.Status == "done";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthProvider.GetAuthenticationStateAsync();
+        var userId = state.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(userId))
+        {
+            Navigation.NavigateTo("/login", replace: true);
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(Id))
+        {
+            _notFound = true;
+            return;
+        }
+
+        try
+        {
+            _task = await Todos.GetTaskAsync(Id, userId);
+        }
+        catch
+        {
+            _task = null;
+        }
+        _notFound = _task is null;
+    }
+
+    private void GoList() => Navigation.NavigateTo("/list");
+
+    private async Task ToggleAsync()
+    {
+        if (_task is null)
+        {
+            return;
+        }
+        _busy = true;
+        var newStatus = IsDone ? "active" : "done";
+        await Todos.SetStatusAsync(_task, newStatus);
+        _busy = false;
+    }
+
+    private async Task DeleteAsync()
+    {
+        if (_task is null)
+        {
+            return;
+        }
+        await Todos.DeleteAsync(_task);
+        Navigation.NavigateTo("/list");
+    }
+
+    private string PriorityColor(string? priority) => priority?.ToUpperInvariant() switch
+    {
+        "HIGH" => "#FF0000",
+        "MED" => "#FFE600",
+        "LOW" => "#00FF88",
+        _ => "#FFE600"
+    };
+}

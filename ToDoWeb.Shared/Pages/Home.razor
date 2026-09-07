@@ -1,1 +1,130 @@
-﻿@page "/"
+﻿@inherits MainLayout
+@page "/list"
+@attribute [Authorize]
+@using System.Security.Claims
+@using ToDoWeb.Shared.Models
+@inject SupabaseAuthenticationStateProvider AuthProvider
+@inject TodoService Todos
+@inject NavigationManager Navigation
+
+<div class="page-list">
+    <div class="list-header">
+        <h1 class="list-title">TASK LIST</h1>
+        <div class="filter-row">
+            <button class="filter-block @(_filter == "ALL" ? "active" : "")" @onclick="SetFilterAll">
+                <span class="filter-count">@_tasks.Count</span>
+                <span class="filter-label">ALL</span>
+            </button>
+            <button class="filter-block @(_filter == "ACTIVE" ? "active" : "")" @onclick="SetFilterActive">
+                <span class="filter-count">@ActiveCount</span>
+                <span class="filter-label">ACTIVE</span>
+            </button>
+            <button class="filter-block @(_filter == "DONE" ? "active" : "")" @onclick="SetFilterDone">
+                <span class="filter-count">@DoneCount</span>
+                <span class="filter-label">DONE</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="task-list">
+        @if (_loading)
+        {
+            <div class="task-note">LOADING...</div>
+        }
+        else if (VisibleTasks.Any() == false)
+        {
+            <div class="list-empty">NO TASKS HERE.</div>
+        }
+        else
+        {
+            @foreach (var task in VisibleTasks)
+            {
+                <div class="task-row @(IsDone(task) ? "done" : "")">
+                    <div class="priority-strip" style="background: @PriorityColor(task.Priority);"></div>
+                    <div class="task-content" @onclick="() => OpenDetail(task)">
+                        <div class="task-top">
+                            <button class="toggle-btn" @onclick="() => ToggleAsync(task)" @onclick:stopPropagation>@(IsDone(task) ? "✓" : "○")</button>
+                            <span class="task-title">@task.Title</span>
+                        </div>
+                        @if (!string.IsNullOrWhiteSpace(task.Detail))
+                        {
+                            <div class="task-note">@task.Detail</div>
+                        }
+                        <div class="task-date">@task.CreatedAt?.ToString("yyyy-MM-dd")</div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    <div class="stats-bar">
+        <span>TOTAL: <strong>@_tasks.Count</strong></span>
+        <span>DONE: <strong>@DoneCount</strong></span>
+        <span>OPEN: <strong>@ActiveCount</strong></span>
+    </div>
+</div>
+
+@code {
+    private List<TaskItem> _tasks = new();
+    private string _filter = "ALL";
+    private bool _loading = true;
+
+    private int ActiveCount => _tasks.Count(t => !IsDone(t));
+    private int DoneCount => _tasks.Count(IsDone);
+
+    private IEnumerable<TaskItem> VisibleTasks => _filter switch
+    {
+        "ACTIVE" => _tasks.Where(t => !IsDone(t)),
+        "DONE" => _tasks.Where(IsDone),
+        _ => _tasks
+    };
+
+    private static bool IsDone(TaskItem task) => task.Status == "done";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthProvider.GetAuthenticationStateAsync();
+        var userId = state.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(userId))
+        {
+            Navigation.NavigateTo("/login", replace: true);
+            _loading = false;
+            return;
+        }
+
+        try
+        {
+            _tasks = await Todos.GetTasksAsync(userId);
+        }
+        catch
+        {
+            _tasks = new List<TaskItem>();
+        }
+        _loading = false;
+    }
+
+    private void SetFilterAll() => _filter = "ALL";
+
+    private void SetFilterActive() => _filter = "ACTIVE";
+
+    private void SetFilterDone() => _filter = "DONE";
+
+    private async Task ToggleAsync(TaskItem task)
+    {
+        var newStatus = IsDone(task) ? "active" : "done";
+        await Todos.SetStatusAsync(task, newStatus);
+    }
+
+    private void OpenDetail(TaskItem task)
+    {
+        Navigation.NavigateTo($"/task/{task.Id}");
+    }
+
+    private static string PriorityColor(string? priority) => priority?.ToUpperInvariant() switch
+    {
+        "HIGH" => "#FF0000",
+        "MED" => "#FFE600",
+        "LOW" => "#00FF88",
+        _ => "#FFE600"
+    };
+}

@@ -1,0 +1,19 @@
+@inject SupabaseAuthenticationStateProvider AuthProvider
+@inject NavigationManager Navigation
+
+<AuthorizeView>
+    <Authorized>
+        <button class="header-btn logout" @onclick="HandleLogout">⎋ OUT</button>
+    </Authorized>
+    <NotAuthorized>
+        <NavLink class="header-btn" href="login" Match="NavLinkMatch.All">// LOGIN</NavLink>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private async Task HandleLogout()
+    {
+        await AuthProvider.LogoutAsync();
+        Navigation.NavigateTo("/login", forceLoad: true);
+    }
+}

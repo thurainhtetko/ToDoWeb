@@ -12,12 +12,12 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>bjt5apr73r</Fingerprint>
-      <Integrity>OR3YAouhe9+6dWuuCgSkCCuH1qUjOxVsbr6fz6eT53k=</Integrity>
+      <Fingerprint>ls8qap48yf</Fingerprint>
+      <Integrity>+8JmI3pviX2L+O6wxq8kB2NycPWXIeqMMnWR2ow4JnQ=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <FileLength>707</FileLength>
-      <LastWriteTime>Tue, 01 Sep 2026 14:13:18 GMT</LastWriteTime>
+      <FileLength>5581</FileLength>
+      <LastWriteTime>Mon, 07 Sep 2026 19:45:29 GMT</LastWriteTime>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\app.css'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\favicon.png'))">
@@ -80,25 +80,25 @@
       <LastWriteTime>Tue, 01 Sep 2026 14:10:19 GMT</LastWriteTime>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\bootstrap\dist\css\bootstrap.min.css.map'))</OriginalItemSpec>
     </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\ToDoWeb.Shared.55f2bxc6pu.bundle.scp.css'))">
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\ToDoWeb.Shared.s8yquijwa1.bundle.scp.css'))">
       <SourceType>Package</SourceType>
       <SourceId>ToDoWeb.Shared</SourceId>
       <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
       <BasePath>_content/ToDoWeb.Shared</BasePath>
-      <RelativePath>ToDoWeb.Shared.55f2bxc6pu.bundle.scp.css</RelativePath>
+      <RelativePath>ToDoWeb.Shared.s8yquijwa1.bundle.scp.css</RelativePath>
       <AssetKind>All</AssetKind>
       <AssetMode>Reference</AssetMode>
       <AssetRole>Primary</AssetRole>
       <RelatedAsset></RelatedAsset>
       <AssetTraitName>ScopedCss</AssetTraitName>
       <AssetTraitValue>ProjectBundle</AssetTraitValue>
-      <Fingerprint>55f2bxc6pu</Fingerprint>
-      <Integrity>KQgG4ZsmCbkN1R/PnBzO+yzShwh1BvEJQOYJZf0DGdY=</Integrity>
+      <Fingerprint>s8yquijwa1</Fingerprint>
+      <Integrity>JDooRQZKghvZkGj7FvMhU+9iMhIcf68RXN0gq5GpvB4=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <FileLength>4949</FileLength>
-      <LastWriteTime>Mon, 07 Sep 2026 17:13:38 GMT</LastWriteTime>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\ToDoWeb.Shared.55f2bxc6pu.bundle.scp.css'))</OriginalItemSpec>
+      <FileLength>17521</FileLength>
+      <LastWriteTime>Mon, 07 Sep 2026 19:47:05 GMT</LastWriteTime>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\ToDoWeb.Shared.s8yquijwa1.bundle.scp.css'))</OriginalItemSpec>
     </StaticWebAsset>
   </ItemGroup>
 </Project>

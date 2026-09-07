@@ -1,0 +1,96 @@
+@inherits MainLayout
+@page "/add"
+@attribute [Authorize]
+@using System.Security.Claims
+@using ToDoWeb.Shared.Models
+@inject SupabaseAuthenticationStateProvider AuthProvider
+@inject TodoService Todos
+@inject NavigationManager Navigation
+
+<div class="add-page">
+    <h1 class="add-title">NEW TASK</h1>
+
+    <label class="field-label accent">TASK TITLE *</label>
+    <input class="title-input" @bind="NewTitle" placeholder="WHAT NEEDS TO BE DONE?" />
+
+    <label class="field-label">NOTES</label>
+    <textarea class="note-input" @bind="NewNote" rows="4" placeholder="Any details..."></textarea>
+
+    <label class="field-label">PRIORITY</label>
+    <div class="priority-row">
+        <button class="priority-opt @(NewPriority == "HIGH" ? "active" : "")" style="background: @(NewPriority == "HIGH" ? "#FF0000" : "#fff");" @onclick='() => SetPriority("HIGH")'>HIGH</button>
+        <button class="priority-opt @(NewPriority == "MED" ? "active" : "")" style="background: @(NewPriority == "MED" ? "#FFE600" : "#fff");" @onclick='() => SetPriority("MED")'>MED</button>
+        <button class="priority-opt @(NewPriority == "LOW" ? "active" : "")" style="background: @(NewPriority == "LOW" ? "#00FF88" : "#fff");" @onclick='() => SetPriority("LOW")'>LOW</button>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Error))
+    {
+        <div class="form-error">⚠ @Error</div>
+    }
+
+    <div class="add-actions">
+        <button class="create-btn" @onclick="HandleCreate" disabled="@Busy">+ CREATE TASK</button>
+        <button class="cancel-btn" @onclick="GoList">CANCEL</button>
+    </div>
+</div>
+
+@code {
+    private string NewTitle { get; set; } = "";
+    private string NewNote { get; set; } = "";
+    private string NewPriority { get; set; } = "MED";
+    private string? Error;
+    private bool Busy;
+
+    private void GoList() => Navigation.NavigateTo("/list");
+
+    private void SetPriority(string priority) => NewPriority = priority;
+
+    private async Task HandleCreate()
+    {
+        if (string.IsNullOrWhiteSpace(NewTitle))
+        {
+            Error = "TITLE IS REQUIRED.";
+            return;
+        }
+
+        var state = await AuthProvider.GetAuthenticationStateAsync();
+        var userId = state.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(userId))
+        {
+            Navigation.NavigateTo("/login", replace: true);
+            return;
+        }
+
+        Busy = true;
+        Error = null;
+        try
+        {
+            var task = new TaskItem
+            {
+                UserId = userId,
+                Title = NewTitle.Trim().ToUpperInvariant(),
+                Detail = NewNote.Trim(),
+                Priority = NewPriority,
+                Status = "active",
+                CreatedAt = DateTime.UtcNow
+            };
+            var saved = await Todos.AddAsync(task);
+            if (saved is null)
+            {
+                Error = "FAILED TO SAVE TASK.";
+            }
+            else
+            {
+                Navigation.NavigateTo("/list");
+            }
+        }
+        catch (Exception ex)
+        {
+            Error = ex.Message;
+        }
+        finally
+        {
+            Busy = false;
+        }
+    }
+}

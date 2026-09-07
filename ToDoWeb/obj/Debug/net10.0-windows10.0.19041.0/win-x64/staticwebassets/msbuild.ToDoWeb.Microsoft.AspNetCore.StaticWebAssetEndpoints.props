@@ -24,17 +24,17 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"klig0f2j2y"},{"Name":"integrity","Value":"sha256-2ME9mv1WjCPByVKA1iLaX8Axh5Dq\u002BbKt9OWsNjNSTVg="},{"Name":"label","Value":"index.html"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"775"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u00222ME9mv1WjCPByVKA1iLaX8Axh5Dq\u002BbKt9OWsNjNSTVg=\u0022"},{"Name":"Last-Modified","Value":"Tue, 01 Sep 2026 14:10:19 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="ToDoWeb.qsmhq0u0g5.styles.css">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\ToDoWeb.styles.css'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"qsmhq0u0g5"},{"Name":"integrity","Value":"sha256-VjixhHOkGLOAFRRjCLD0xGSnOTE7hm5whfwU2zFF3uc="},{"Name":"label","Value":"ToDoWeb.styles.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"79"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022VjixhHOkGLOAFRRjCLD0xGSnOTE7hm5whfwU2zFF3uc=\u0022"},{"Name":"Last-Modified","Value":"Wed, 02 Sep 2026 14:08:55 GMT"},{"Name":"Link","Value":"\u003C_content/ToDoWeb.Shared/ToDoWeb.Shared.55f2bxc6pu.bundle.scp.css\u003E; rel=\u0022preload\u0022; as=\u0022style\u0022"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="ToDoWeb.styles.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\ToDoWeb.styles.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-VjixhHOkGLOAFRRjCLD0xGSnOTE7hm5whfwU2zFF3uc="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"79"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022VjixhHOkGLOAFRRjCLD0xGSnOTE7hm5whfwU2zFF3uc=\u0022"},{"Name":"Last-Modified","Value":"Wed, 02 Sep 2026 14:08:55 GMT"},{"Name":"Link","Value":"\u003C_content/ToDoWeb.Shared/ToDoWeb.Shared.55f2bxc6pu.bundle.scp.css\u003E; rel=\u0022preload\u0022; as=\u0022style\u0022"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-x2Tp6hXI1cvS85\u002BcEjRmVj/IvrtKhMZUSLxOMEPuidk="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"79"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022x2Tp6hXI1cvS85\u002BcEjRmVj/IvrtKhMZUSLxOMEPuidk=\u0022"},{"Name":"Last-Modified","Value":"Mon, 07 Sep 2026 19:32:41 GMT"},{"Name":"Link","Value":"\u003C_content/ToDoWeb.Shared/ToDoWeb.Shared.w0rfukjt19.bundle.scp.css\u003E; rel=\u0022preload\u0022; as=\u0022style\u0022"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="ToDoWeb.t7mrywdhpm.styles.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\ToDoWeb.styles.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"t7mrywdhpm"},{"Name":"integrity","Value":"sha256-x2Tp6hXI1cvS85\u002BcEjRmVj/IvrtKhMZUSLxOMEPuidk="},{"Name":"label","Value":"ToDoWeb.styles.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"79"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022x2Tp6hXI1cvS85\u002BcEjRmVj/IvrtKhMZUSLxOMEPuidk=\u0022"},{"Name":"Last-Modified","Value":"Mon, 07 Sep 2026 19:32:41 GMT"},{"Name":"Link","Value":"\u003C_content/ToDoWeb.Shared/ToDoWeb.Shared.w0rfukjt19.bundle.scp.css\u003E; rel=\u0022preload\u0022; as=\u0022style\u0022"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
   </ItemGroup>
 </Project>

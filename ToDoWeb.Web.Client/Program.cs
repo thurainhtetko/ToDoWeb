@@ -1,10 +1,25 @@
+// ToDoWeb.Web.Client/Program.cs
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.AspNetCore.Components.Authorization;
 using ToDoWeb.Shared.Services;
-using ToDoWeb.Web.Client.Services;
+using Supabase;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-// Add device-specific services used by the ToDoWeb.Shared project
-builder.Services.AddSingleton<IFormFactor, FormFactor>();
+var supabaseUrl = builder.Configuration["Supabase:Url"] ?? "YOUR_SUPABASE_URL";
+var supabaseKey = builder.Configuration["Supabase:AnonKey"] ?? "YOUR_SUPABASE_ANON_KEY";
+
+// Register Client on WASM side
+builder.Services.AddScoped(provider => new Supabase.Client(supabaseUrl, supabaseKey, new SupabaseOptions
+{
+    AutoRefreshToken = true,
+    AutoConnectRealtime = true
+}));
+
+builder.Services.AddAuthorizationCore();
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddScoped<SupabaseAuthenticationStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<SupabaseAuthenticationStateProvider>());
+builder.Services.AddScoped<TodoService>();
 
 await builder.Build().RunAsync();

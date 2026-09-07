@@ -2,12 +2,12 @@
 
 <div class="page">
     <div class="header">
-        <span class="icon">TODO</span>
+        <span class="icon">BRUTODO</span>
         <div class="button-container">
-            <button> // LIST</button>
-            <button> + ADD</button>
+            <NavLink class="header-btn" href="list" Match="NavLinkMatch.All">// LIST</NavLink>
+            <NavLink class="header-btn" href="add" Match="NavLinkMatch.All">+ ADD</NavLink>
+            <AuthMenu />
         </div>
     </div>
-    <div>@Body</div>
-    <div class="footer"></div>
+    <div class="page-content">@Body</div>
 </div>

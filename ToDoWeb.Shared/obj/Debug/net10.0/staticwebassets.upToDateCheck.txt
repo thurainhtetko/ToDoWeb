@@ -3,5 +3,5 @@ wwwroot\favicon.png
 wwwroot\lib\bootstrap\dist\css\bootstrap.min.css
 wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map
 E:\Codes\C#\ToDoWeb\ToDoWeb\ToDoWeb.Shared\wwwroot\app.css
-E:\Codes\C#\ToDoWeb\ToDoWeb\ToDoWeb.Shared\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css
 E:\Codes\C#\ToDoWeb\ToDoWeb\ToDoWeb.Shared\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map
+E:\Codes\C#\ToDoWeb\ToDoWeb\ToDoWeb.Shared\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css

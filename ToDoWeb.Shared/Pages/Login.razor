@@ -1,0 +1,88 @@
+@page "/login"
+@layout AuthLayout
+@inject SupabaseAuthenticationStateProvider AuthProvider
+@inject NavigationManager Navigation
+
+<div class="auth-page">
+    <div class="auth-switcher">
+        <a class="auth-tab active" href="login">// LOGIN</a>
+        <a class="auth-tab" href="register">+ REGISTER</a>
+    </div>
+
+    <div class="auth-eyebrow">WELCOME BACK</div>
+    <h1 class="auth-title">SIGN<br />IN.</h1>
+
+    <EditForm Model="@model" OnValidSubmit="HandleLogin">
+        <div class="auth-field">
+            <label class="auth-label accent">EMAIL</label>
+            <InputText class="auth-input input-field" @bind-Value="model.Email" autocomplete="username" placeholder="you@example.com" />
+        </div>
+
+        <div class="auth-field">
+            <label class="auth-label">PASSWORD</label>
+            <InputText class="auth-input input-field" type="password" @bind-Value="model.Password" autocomplete="current-password" placeholder="••••••••" />
+        </div>
+
+        @if (!string.IsNullOrEmpty(Error))
+        {
+            <div class="auth-error">⚠ @Error</div>
+        }
+        @if (Busy)
+        {
+            <div class="auth-busy">SIGNING IN...</div>
+        }
+
+        <button type="submit" class="auth-submit" disabled="@Busy">ENTER →</button>
+    </EditForm>
+
+    <div class="auth-hint">
+        NO ACCOUNT? <a href="register">REGISTER HERE.</a>
+    </div>
+</div>
+
+@code {
+    private readonly LoginModel model = new();
+    private string? Error;
+    private bool Busy;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthProvider.GetAuthenticationStateAsync();
+        if (state.User.Identity?.IsAuthenticated == true)
+        {
+            Navigation.NavigateTo("/list", replace: true);
+        }
+    }
+
+    private async Task HandleLogin()
+    {
+        Busy = true;
+        Error = null;
+        try
+        {
+            var session = await AuthProvider.LoginAsync(model.Email, model.Password);
+            if (session is null || string.IsNullOrEmpty(session.AccessToken))
+            {
+                Error = "INVALID EMAIL OR PASSWORD.";
+            }
+            else
+            {
+                Navigation.NavigateTo("/list", forceLoad: true);
+            }
+        }
+        catch (Exception ex)
+        {
+            Error = ex.Message;
+        }
+        finally
+        {
+            Busy = false;
+        }
+    }
+
+    private class LoginModel
+    {
+        public string Email { get; set; } = "";
+        public string Password { get; set; } = "";
+    }
+}

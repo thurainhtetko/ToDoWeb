@@ -1,0 +1,97 @@
+@page "/register"
+@layout AuthLayout
+@inject SupabaseAuthenticationStateProvider AuthProvider
+@inject NavigationManager Navigation
+
+<div class="auth-page">
+    <div class="auth-switcher">
+        <a class="auth-tab" href="login">// LOGIN</a>
+        <a class="auth-tab active" href="register">+ REGISTER</a>
+    </div>
+
+    <div class="auth-eyebrow">CREATE ACCOUNT</div>
+    <h1 class="auth-title">SIGN<br />UP.</h1>
+
+    <EditForm Model="@model" OnValidSubmit="HandleRegister">
+        <div class="auth-field">
+            <label class="auth-label accent">EMAIL</label>
+            <InputText class="auth-input input-field" type="email" @bind-Value="model.Email" autocomplete="username" placeholder="you@example.com" />
+        </div>
+
+        <div class="auth-field">
+            <label class="auth-label">PASSWORD</label>
+            <InputText class="auth-input input-field" type="password" @bind-Value="model.Password" autocomplete="new-password" placeholder="min. 6 characters" />
+        </div>
+
+        <div class="auth-field">
+            <label class="auth-label">CONFIRM PASSWORD</label>
+            <InputText class="auth-input input-field" type="password" @bind-Value="model.Confirm" autocomplete="new-password" placeholder="repeat password" />
+        </div>
+
+        @if (!string.IsNullOrEmpty(Error))
+        {
+            <div class="auth-error">⚠ @Error</div>
+        }
+        @if (Busy)
+        {
+            <div class="auth-busy">CREATING ACCOUNT...</div>
+        }
+
+        <button type="submit" class="auth-submit" disabled="@Busy">CREATE →</button>
+    </EditForm>
+
+    <div class="auth-hint">
+        HAVE AN ACCOUNT? <a href="login">LOGIN HERE.</a>
+    </div>
+</div>
+
+@code {
+    private readonly RegisterModel model = new();
+    private string? Error;
+    private bool Busy;
+
+    private async Task HandleRegister()
+    {
+        Busy = true;
+        Error = null;
+        if (string.IsNullOrWhiteSpace(model.Email) || string.IsNullOrWhiteSpace(model.Password) || string.IsNullOrWhiteSpace(model.Confirm))
+        {
+            Error = "ALL FIELDS REQUIRED.";
+            Busy = false;
+            return;
+        }
+        if (model.Password != model.Confirm)
+        {
+            Error = "PASSWORDS DO NOT MATCH.";
+            Busy = false;
+            return;
+        }
+        try
+        {
+            var session = await AuthProvider.RegisterAsync(model.Email, model.Password);
+            if (session is null || string.IsNullOrEmpty(session.AccessToken))
+            {
+                Error = "ACCOUNT CREATED. CHECK YOUR EMAIL TO CONFIRM, THEN SIGN IN.";
+            }
+            else
+            {
+                Navigation.NavigateTo("/list", forceLoad: true);
+            }
+        }
+        catch (Exception ex)
+        {
+            Error = ex.Message;
+        }
+        finally
+        {
+            Busy = false;
+        }
+    }
+
+    private class RegisterModel
+    {
+        public string Email { get; set; } = "";
+        public string Password { get; set; } = "";
+        public string Confirm { get; set; } = "";
+    }
+}
