@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Comfortaa:wght@300..700&family=Elms+Sans:ital,wght@0,100..900;1,100..900&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    font-family: monospace;
+}
+:root {
+    --font-display: 'Anton', sans-serif;
+    --font-body: 'Space Mono', monospace;
+    --color-bg: #ffffff;
+    --color-fg: #000000;
+    --color-accent: #FFE600;
+    --color-danger: #FF0000;
+    --color-priority-high: #FF0000;
+    --color-priority-med: #FFE600;
+    --color-priority-low: #00FF88;
+    --color-done-bg: #f0f0f0;
+    --color-muted: #888888;
+    --color-muted-light: #aaaaaa;
+}

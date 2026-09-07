@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "QkTlZtDa42Y=",
+  "success": true,
+  "projectFilePath": "E:\\Codes\\C#\\ToDoWeb\\ToDoWeb\\ToDoWeb.Web\\ToDoWeb.Web.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\BoeainLaptop\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.11\\microsoft.aspnetcore.app.internal.assets.10.0.11.nupkg.sha512",
+    "C:\\Users\\BoeainLaptop\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly\\10.0.0\\microsoft.aspnetcore.components.webassembly.10.0.0.nupkg.sha512",
+    "C:\\Users\\BoeainLaptop\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.server\\10.0.0\\microsoft.aspnetcore.components.webassembly.server.10.0.0.nupkg.sha512",
+    "C:\\Users\\BoeainLaptop\\.nuget\\packages\\microsoft.jsinterop.webassembly\\10.0.0\\microsoft.jsinterop.webassembly.10.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
