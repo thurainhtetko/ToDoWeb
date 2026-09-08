@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Todo</title>
+    <script>
+        (function () {
+            var p = location.pathname;
+            if (!p || p === "/") return;
+            var last = p.split("/").pop() || "index";
+            if (last.indexOf(".") !== -1) return;
+            sessionStorage.redirect = p;
+            location.replace("/");
+        })();
+    </script>
+</head>
+<body>
+</body>
+</html>
