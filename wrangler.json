@@ -1,0 +1,8 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "todo",
+  "compatibility_date": "2026-09-08",
+  "assets": {
+    "directory": "./ToDoWeb.Web.Client/bin/Release/net10.0/publish/wwwroot"
+  }
+}
